@@ -1,5 +1,7 @@
 version: '3'
 services:
+
+# Webサーバー
   nginx:
     build: ./nginx
     container_name: 'rm-nginx'
@@ -14,6 +16,7 @@ services:
     depends_on:
       - php
 
+# Laravel
   php:
     build: ./php
     container_name: 'rm-php'
@@ -22,7 +25,11 @@ services:
       - "../src:/opt/src"
     environment:
       TZ: "Asia/Tokyo"
+    depends_on:
+      - mysql
+      - memcached
 
+# データベース
   mysql:
     build: ./mysql
     container_name: 'rm-mysql'
@@ -40,3 +47,16 @@ services:
       - "./mysql/mysql_init:/docker-entrypoint-initdb.d"
     ports:
       - "3306:3306"
+
+# memcached
+  memcached:
+    build: ./memcached
+    container_name: 'rm-memcached'
+    tty: true
+    environment:
+      TZ: 'Asia/Tokyo'
+    ports:
+      - "11211:11211"
+
+# vue.js
+
