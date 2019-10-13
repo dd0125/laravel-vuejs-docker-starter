@@ -22,3 +22,21 @@ services:
       - "../src:/opt/src"
     environment:
       TZ: "Asia/Tokyo"
+
+  mysql:
+    build: ./mysql
+    container_name: 'rm-mysql'
+    tty: true
+    environment:
+      MYSQL_ROOT_PASSWORD: "q5EzPZr3"
+      MYSQL_DATABASE: "rm"
+      MYSQL_USER: "docker"
+      MYSQL_PASSWORD: "tK68bSQ5"
+      BIND-ADDRESS: "0.0.0.0"
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - "./mysql/data:/var/lib/mysql"
+      - "./mysql/conf_d:/etc/mysql/conf.d"
+      - "./mysql/mysql_init:/docker-entrypoint-initdb.d"
+    ports:
+      - "3306:3306"
