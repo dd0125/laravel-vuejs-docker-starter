@@ -1,0 +1,24 @@
+version: '3'
+services:
+  nginx:
+    build: ./nginx
+    container_name: 'rm-nginx'
+    tty: true
+    ports:
+      - "8080:80"
+    volumes:
+      - "./nginx/conf_d:/etc/nginx/conf.d"
+      - "./nginx/static:/var/www/static"
+    environment:
+      TZ: "Asia/Tokyo"
+    depends_on:
+      - php
+
+  php:
+    build: ./php
+    container_name: 'rm-php'
+    tty: true
+    volumes:
+      - "../src:/opt/src"
+    environment:
+      TZ: "Asia/Tokyo"
