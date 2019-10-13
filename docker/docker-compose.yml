@@ -22,7 +22,7 @@ services:
     container_name: 'rm-php'
     tty: true
     volumes:
-      - "../src:/opt/src"
+      - "../src/laravel:/opt/src"
     environment:
       TZ: "Asia/Tokyo"
     depends_on:
@@ -59,4 +59,13 @@ services:
       - "11211:11211"
 
 # vue.js
-
+  vuejs:
+    build: ./vuejs
+    container_name: 'rm-vuejs'
+    tty: true
+    environment:
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - "../src/vuejs:/opt/src"
+    ports:
+      - "3000:3000"
