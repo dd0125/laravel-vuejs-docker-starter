@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Sample;
 
 use App\Http\Controllers\Controller;
 use Cache;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Session;
 use Memcached;
@@ -16,7 +17,7 @@ class SampleController extends Controller
      * 表示されるとルーティングできている
      */
     public function hello(){
-        echo "Hello SampleController.";
+        return response( "Hello SampleController.");
     }
 
     public function phpinfo() {
@@ -27,10 +28,12 @@ class SampleController extends Controller
      * 表示されると環境編集が取得できている
      */
     public function env(Request $request) {
-        echo "Hello env; ";
-        echo "APP_NAME = " . env("APP_NAME") . "; ";
-        echo "DB_USERNAME = " . env("DB_USERNAME") . "; ";
-        echo "TZ = " . env("TZ") . "; ";
+        $response = array();
+        $response["title"] = "Hello env";
+        $response["APP_NAME"] = env("APP_NAME");
+        $response["DB_USERNAME"] = env("DB_USERNAME");
+        $response["TZ"] = env("TZ");
+        return new JsonResponse($response);
     }
 
     /**
@@ -39,8 +42,8 @@ class SampleController extends Controller
     public function cache(Request $request) {
         $value = Cache::get('sample', 0);
         $value = $value + 1;
-        echo "Hello Cache = $value";
         Cache::put('sample', $value);
+        return response("Hello Cache = $value");
     }
 
     /**
@@ -51,20 +54,20 @@ class SampleController extends Controller
         $mc->addServer("memcached", env("MEMCACHED_PORT"));
         $value = $mc->get("sample_memcached");
         $value = $value + 1;
-        echo "Hello Memcached = $value";
         $mc->set("sample_memcached", $value);
+        return response("Hello Memcached = $value");
     }
 
     /**
      * 表示されるとデータベースと接続できている
      */
     public function db(Request $request){
+        $response = array();
         $simpleNumber = DB::select('select 123+200');
-        var_dump($simpleNumber);
-        echo "<br />";
+        $response["select 123+200"] = $simpleNumber;
         $databases = DB::select('show databases');
-        var_dump($databases);
-        echo "<br />";
+        $response["databases"] = $databases;
+        return new JsonResponse($response);
     }
 
     public function cookie(Request $request){
@@ -80,62 +83,29 @@ class SampleController extends Controller
         return response("Hello Cookie Facade = $value");
     }
 
-    public function user(Request $request) {
-        $userId = $request->session()->get('user_id');
-        echo "session user id = $userId";
+    public function sessionId(Request $request){
+        $sessionId = session()->getId();
+        return response("Hello Session Id = $sessionId");
     }
-
+    public function session(Request $request) {
+        $value = Session::get('sample', 0);
+        $value = $value + 1;
+        Session::put('sample', $value);
+        return response("Hello Session = $value");
+    }
 
     public function login(Request $request) {
-        setcookie("setcookie_key", "value", strtotime("+1 hour"), '/', false);
-//        setcookie("SESSID", "value3111", strtotime("+1 hour"), '/', false);
-//        setcookie(
-//            'setcookie_cookiename',
-//            'cookievalue1',
-//            strtotime("+1 hour"),
-//            '/',
-//            null
-//        );
-//        setcookie(
-//            'setcookie_cookiename22',
-//            'cookievalue1222',
-//            strtotime("+1 hour"),
-//            '/',
-//            null,
-//            false,
-//            false
-//        );
-
-//        $session_id = session()->getId();
-//        echo "session id = " . $session_id;
-
-//        $number = session()->get("sample");
-//        $number = $number + 1;
-//        echo "<br>session number = " . $number . "<br>";
-//        session()->put("sample", $number);
-
-        // string $name, string $value = null, $expire = 0, ?string $path = '/', string $domain = null,
-        // ?bool $secure = false, bool $httpOnly = true, bool $raw = false, string $sameSite = null
-        $response = response('sss');
-        $c = Cookie::make('coo1', 'val11', strtotime("+1 hour"), '/', null, false, false);
-        var_dump($c);
-        Cookie::queue($c);
-        $response->headers->setCookie($c);
-        $response->send();
-
-
-        $cookie = Cookie::queue(Cookie::make('CookieName111', 'CookieValue111', strtotime("+1 hour"), '/', false));
-
-        $paramUserId = $request->get('user_id');
-        $request->session()->put('user_id', $paramUserId);
-
-        $userId = $request->session()->get('user_id');
-        echo "session login user id = $userId";
-//        Symfony\Component\HttpFoundation\c
-
-        Cookie::queue(Cookie::make('name2', 'value2', 6000));
-
-
-        return $response;
+        $response = array();
+        $userId = $request->get('user_id');
+        session()->put('user_id', $userId);
+        $response["user_id"] = $userId;
+        $response["message"] = "/sample/user を開くと user_id が表示されます";
+        return new JsonResponse($response);
     }
+
+    public function user(Request $request) {
+        $userId = $request->session()->get('user_id');
+        return response("session user id = $userId");
+    }
+
 }
