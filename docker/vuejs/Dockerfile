@@ -6,3 +6,4 @@ RUN apt update
 
 RUN npm -v
 RUN npm install --global @vue/cli
+RUN npm install --global typescript

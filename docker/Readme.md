@@ -21,7 +21,8 @@ docker-compose exec gas-build bash
 docker-compose stop
 
 
-# 以下は初回のみ以下を実行する
+
+# Laravel
 
 ## laravel のプロジェクトを作成
 
@@ -37,4 +38,11 @@ php artisan -V
 ```
 cd /opt/src/laravel
 php artisan serve --host 0.0.0.0
+```
+
+# Vue.js
+
+## Vue.js を 備え付きHttpサーバーで開く
+```
+docker exec -it sample-vuejs bash -c "cd /opt/src/app && yarn serve"
 ```

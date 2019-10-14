@@ -37,6 +37,13 @@ export default {
     msg: String
   }
 }
+
+class bbb {
+  a = [123,223,342];
+}
+const b = new bbb();
+console.log(b.a[2]);
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
