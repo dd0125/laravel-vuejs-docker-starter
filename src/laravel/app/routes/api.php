@@ -24,18 +24,6 @@ use Illuminate\Http\Request;
 //    echo "aaagfa";
 //}]);
 
-//Route::get('login', function(Request $request){
-//    echo "aaagfa2";
-//})->name('login');
-
-
-//Route::middleware('middleware_name')->group(function () {
-//    Route::get('/user', function (Request $request) {
-//        return $request->user();
-//    });
-//
-//});
-
 
 
 // 確認用
