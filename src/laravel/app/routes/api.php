@@ -40,6 +40,8 @@ use Illuminate\Http\Request;
 
 // 確認用
 Route::get('/sample/hello', "Sample\SampleController@hello");
+Route::get('/sample/env', "Sample\SampleController@env");
 Route::get('/sample/cache', "Sample\SampleController@cache");
 Route::get('/sample/memcached', "Sample\SampleController@memcached");
+Route::get('/sample/db', "Sample\SampleController@db");
 

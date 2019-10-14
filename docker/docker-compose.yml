@@ -11,7 +11,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       MYSQL_DATABASE: "${PROJECT}"
-      MYSQL_USER: "docker"
+      MYSQL_USER: "${MYSQL_USER}"
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
       BIND-ADDRESS: "0.0.0.0"
       TZ: 'Asia/Tokyo'
@@ -40,6 +40,9 @@ services:
     volumes:
       - "../src/laravel:/opt/src"
     environment:
+      DB_DATABASE: "${PROJECT}"
+      DB_USERNAME: "${MYSQL_USER}"
+      DB_PASSWORD: "${MYSQL_PASSWORD}"
       TZ: "Asia/Tokyo"
     depends_on:
       - mysql
