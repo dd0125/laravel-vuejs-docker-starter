@@ -42,7 +42,7 @@ class SampleController extends Controller
      */
     public function memcached() {
         $mc = new Memcached();
-        $mc->addServer("memcached", 11211);
+        $mc->addServer("memcached", env("MEMCACHED_PORT"));
         $value = $mc->get("sample_memcached");
         $value = $value + 1;
         echo "Hello Memcached = $value";
