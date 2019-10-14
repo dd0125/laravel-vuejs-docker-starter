@@ -45,6 +45,8 @@ Route::get('/sample/env', "Sample\SampleController@env");
 Route::get('/sample/cache', "Sample\SampleController@cache");
 Route::get('/sample/memcached', "Sample\SampleController@memcached");
 Route::get('/sample/db', "Sample\SampleController@db");
+Route::get('/sample/cookie', "Sample\SampleController@cookie");
+Route::get('/sample/cookie_facade', "Sample\SampleController@cookieFacade");
 
 Route::get('/sample/user', "Sample\SampleController@user");
 Route::get('/sample/login', "Sample\SampleController@login");

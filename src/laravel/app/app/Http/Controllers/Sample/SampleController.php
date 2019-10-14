@@ -67,6 +67,19 @@ class SampleController extends Controller
         echo "<br />";
     }
 
+    public function cookie(Request $request){
+        $value = $request->cookie('sample', 0);
+        $value = $value + 1;
+        $cookie = cookie('sample', $value, 5);
+        return response("Hello Cookie = $value")->cookie($cookie);
+    }
+    public function cookieFacade(Request $request){
+        $value = Cookie::get('sample', 0);
+        $value = $value + 1;
+        Cookie::queue('sample', $value, 5);
+        return response("Hello Cookie Facade = $value");
+    }
+
     public function user(Request $request) {
         $userId = $request->session()->get('user_id');
         echo "session user id = $userId";
