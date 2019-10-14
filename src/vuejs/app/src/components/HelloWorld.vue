@@ -42,7 +42,7 @@ class bbb {
   a = [123,223,342];
 }
 const b = new bbb();
-console.log(b.a[2]);
+console.log(b.a[1]);
 
 </script>
 

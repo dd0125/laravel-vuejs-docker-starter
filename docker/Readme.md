@@ -43,6 +43,13 @@ php artisan serve --host 0.0.0.0
 # Vue.js
 
 ## Vue.js を 備え付きHttpサーバーで開く
+
 ```
 docker exec -it sample-vuejs bash -c "cd /opt/src/app && yarn serve"
+```
+
+## Vue.js をビルド
+
+```
+docker exec -it sample-vuejs bash -c "cd /opt/src/app && yarn run build --watch"
 ```

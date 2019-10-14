@@ -67,10 +67,11 @@ services:
     container_name: '${PROJECT}-nginx'
     tty: true
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - "./nginx/conf_d:/etc/nginx/conf.d"
       - "./nginx/static:/var/www/static"
+      - "../src/vuejs:/opt/src/vuejs"
     environment:
       TZ: "Asia/Tokyo"
     depends_on:
