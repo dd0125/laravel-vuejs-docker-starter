@@ -6,13 +6,13 @@ services:
   # データベース
   mysql:
     build: ./mysql
-    container_name: 'rm-mysql'
+    container_name: '${PROJECT}-mysql'
     tty: true
     environment:
-      MYSQL_ROOT_PASSWORD: "q5EzPZr3"
-      MYSQL_DATABASE: "rm"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${PROJECT}"
       MYSQL_USER: "docker"
-      MYSQL_PASSWORD: "tK68bSQ5"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
       BIND-ADDRESS: "0.0.0.0"
       TZ: 'Asia/Tokyo'
     volumes:
@@ -25,7 +25,7 @@ services:
   # memcached
   memcached:
     build: ./memcached
-    container_name: 'rm-memcached'
+    container_name: '${PROJECT}-memcached'
     tty: true
     environment:
       TZ: 'Asia/Tokyo'
@@ -35,7 +35,7 @@ services:
 # Laravel
   php:
     build: ./php
-    container_name: 'rm-php'
+    container_name: '${PROJECT}-php'
     tty: true
     volumes:
       - "../src/laravel:/opt/src"
@@ -48,7 +48,7 @@ services:
 # vue.js
   vuejs:
     build: ./vuejs
-    container_name: 'rm-vuejs'
+    container_name: '${PROJECT}-vuejs'
     tty: true
     environment:
       TZ: 'Asia/Tokyo'
@@ -61,7 +61,7 @@ services:
   # Webサーバー
   nginx:
     build: ./nginx
-    container_name: 'rm-nginx'
+    container_name: '${PROJECT}-nginx'
     tty: true
     ports:
       - "8080:80"
