@@ -13,6 +13,33 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// api/user にget でアクセスした場合、apiの中のauthミドルウェアを実行し、
+// function の中身を実行して返す
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+// api/login にアクセスした場合、function の中を返す
+//Route::get('/login', [ 'as' => 'login', 'uses' => function(Request $request){
+//    echo "aaagfa";
+//}]);
+
+//Route::get('login', function(Request $request){
+//    echo "aaagfa2";
+//})->name('login');
+
+
+//Route::middleware('middleware_name')->group(function () {
+//    Route::get('/user', function (Request $request) {
+//        return $request->user();
+//    });
+//
+//});
+
+
+
+// 確認用
+Route::get('/sample/hello', "Sample\SampleController@hello");
+Route::get('/sample/cache', "Sample\SampleController@cache");
+Route::get('/sample/memcached', "Sample\SampleController@memcached");
+

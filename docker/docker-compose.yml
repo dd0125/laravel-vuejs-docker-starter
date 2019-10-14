@@ -1,35 +1,9 @@
 version: '3'
 services:
 
-# Webサーバー
-  nginx:
-    build: ./nginx
-    container_name: 'rm-nginx'
-    tty: true
-    ports:
-      - "8080:80"
-    volumes:
-      - "./nginx/conf_d:/etc/nginx/conf.d"
-      - "./nginx/static:/var/www/static"
-    environment:
-      TZ: "Asia/Tokyo"
-    depends_on:
-      - php
 
-# Laravel
-  php:
-    build: ./php
-    container_name: 'rm-php'
-    tty: true
-    volumes:
-      - "../src/laravel:/opt/src"
-    environment:
-      TZ: "Asia/Tokyo"
-    depends_on:
-      - mysql
-      - memcached
 
-# データベース
+  # データベース
   mysql:
     build: ./mysql
     container_name: 'rm-mysql'
@@ -48,7 +22,7 @@ services:
     ports:
       - "3306:3306"
 
-# memcached
+  # memcached
   memcached:
     build: ./memcached
     container_name: 'rm-memcached'
@@ -57,6 +31,19 @@ services:
       TZ: 'Asia/Tokyo'
     ports:
       - "11211:11211"
+
+# Laravel
+  php:
+    build: ./php
+    container_name: 'rm-php'
+    tty: true
+    volumes:
+      - "../src/laravel:/opt/src"
+    environment:
+      TZ: "Asia/Tokyo"
+    depends_on:
+      - mysql
+      - memcached
 
 # vue.js
   vuejs:
@@ -69,3 +56,19 @@ services:
       - "../src/vuejs:/opt/src"
     ports:
       - "3000:3000"
+
+
+  # Webサーバー
+  nginx:
+    build: ./nginx
+    container_name: 'rm-nginx'
+    tty: true
+    ports:
+      - "8080:80"
+    volumes:
+      - "./nginx/conf_d:/etc/nginx/conf.d"
+      - "./nginx/static:/var/www/static"
+    environment:
+      TZ: "Asia/Tokyo"
+    depends_on:
+      - php

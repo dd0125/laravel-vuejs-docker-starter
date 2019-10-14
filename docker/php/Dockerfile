@@ -16,12 +16,17 @@ RUN apt install -y unzip
 
 
 RUN apt install -y zlib1g-dev
-RUN apt install -y default-mysql-client
+RUN docker-php-ext-install zip
 # RUN apt install -y php-zip
 
-RUN docker-php-ext-install zip
+# mysql
+RUN apt install -y default-mysql-client
 RUN docker-php-ext-install pdo_mysql
 
+# memcached
+RUN apt install -y libmemcached-dev
+RUN pecl install memcached-3.0.4
+RUN docker-php-ext-enable memcached
 
 # install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
